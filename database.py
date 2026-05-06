@@ -52,19 +52,19 @@ def init_db():
     cursor.execute("SELECT COUNT(*) FROM cars")
     if cursor.fetchone()[0] == 0:
         sample_cars = [
-            # USING LOCAL IMAGES from static/images/ folder
-            ('Tesla Model 3', 89, '/static/images/tesla.jpg', 1),
-            ('BMW i8', 149, '/static/images/bmw.jpg', 1),
-            ('Mercedes C-Class', 99, '/static/images/mercedes.jpg', 1),
-            ('Audi A6', 109, '/static/images/audi.jpg', 1),
-            ('Porsche 911', 299, '/static/images/porsche.jpg', 1),
-            ('Toyota Camry', 65, '/static/images/toyota.jpg', 1),
-            ('Honda Civic', 55, '/static/images/honda.jpg', 1),
-            ('Ford Mustang', 199, '/static/images/ford.jpg', 1),
-            ('Chevrolet Camaro', 179, '/static/images/chevrolet.jpg', 1),
-            ('Lamborghini Huracan', 499, '/static/images/lamborghini.jpg', 1),
-            ('Volkswagen Golf', 70, '/static/images/volkswagen.jpg', 1),
-            ('Nissan GT-R', 250, '/static/images/nissan.jpg', 1),
+            # USING LOCAL IMAGES from static/images/ folder with .jpeg extension
+            ('Tesla Model 3', 89, '/static/images/tesla.jpeg', 1),
+            ('BMW i8', 149, '/static/images/bmw.jpeg', 1),
+            ('Mercedes C-Class', 99, '/static/images/mercedes.jpeg', 1),
+            ('Audi A6', 109, '/static/images/audi.jpeg', 1),
+            ('Porsche 911', 299, '/static/images/porsche.jpeg', 1),
+            ('Toyota Camry', 65, '/static/images/toyota.jpeg', 1),
+            ('Honda Civic', 55, '/static/images/honda.jpeg', 1),
+            ('Ford Mustang', 199, '/static/images/ford.jpeg', 1),
+            ('Chevrolet Camaro', 179, '/static/images/chevrolet.jpeg', 1),
+            ('Lamborghini Huracan', 499, '/static/images/lamborghini.jpeg', 1),
+            ('Volkswagen Golf', 70, '/static/images/volkswagen.jpeg', 1),
+            ('Nissan GT-R', 250, '/static/images/nissan.jpeg', 1),
         ]
         cursor.executemany("INSERT INTO cars (name, price_per_day, image_url, is_available) VALUES (?, ?, ?, ?)", sample_cars)
     
