@@ -5,6 +5,11 @@ import database as db
 app = Flask(__name__)
 app.secret_key = 'car-hire-secure-2024!'
 
+
+@app.after_request
+def add_header(response):
+    response.headers['Content-Security-Policy'] = "img-src 'self' https://cdn.pixabay.com data:;"
+    return response
 # Add datetime to template context
 @app.context_processor
 def inject_now():
