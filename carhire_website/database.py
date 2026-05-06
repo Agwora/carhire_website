@@ -52,7 +52,6 @@ def init_db():
     cursor.execute("SELECT COUNT(*) FROM cars")
     if cursor.fetchone()[0] == 0:
         sample_cars = [
-            # USING VERIFIED WORKING IMAGE URLs FROM RELIABLE CDNs
             ('Tesla Model 3', 89, 'https://cdn.pixabay.com/photo/2024/01/19/22/43/tesla-8520984_640.jpg', 1),
             ('BMW i8', 149, 'https://cdn.pixabay.com/photo/2020/04/03/21/05/bmw-5001276_640.jpg', 1),
             ('Mercedes C-Class', 99, 'https://cdn.pixabay.com/photo/2020/04/22/20/32/mercedes-5081316_640.jpg', 1),
