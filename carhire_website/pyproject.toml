@@ -8,7 +8,9 @@ authors = [
 dependencies = [
     "flask>=3.0.0",
     "gunicorn>=21.2.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
+    "flask-sqlalchemy", # Add this if you have a database
+    "flask-login"
 ]
 requires-python = ">=3.11,<3.13"
 
