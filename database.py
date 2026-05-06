@@ -52,7 +52,7 @@ def init_db():
     cursor.execute("SELECT COUNT(*) FROM cars")
     if cursor.fetchone()[0] == 0:
         sample_cars = [
-            # USING LOCAL IMAGES from static/images/
+            # USING LOCAL IMAGES from static/images/ folder
             ('Tesla Model 3', 89, '/static/images/tesla.jpg', 1),
             ('BMW i8', 149, '/static/images/bmw.jpg', 1),
             ('Mercedes C-Class', 99, '/static/images/mercedes.jpg', 1),
@@ -71,7 +71,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# ALL OTHER FUNCTIONS REMAIN THE SAME (copy from previous database.py)
 def get_all_cars(filters=None):
     conn = get_db()
     query = "SELECT * FROM cars WHERE is_available = 1"
@@ -86,11 +85,24 @@ def get_all_cars(filters=None):
             if filters['min_price'] <= filters['max_price']:
                 query += " AND price_per_day BETWEEN ? AND ?"
                 params.extend([filters['min_price'], filters['max_price']])
+            else:
+                query += " AND price_per_day BETWEEN ? AND ?"
+                params.extend([filters['max_price'], filters['min_price']])
+        elif filters.get('min_price'):
+            query += " AND price_per_day >= ?"
+            params.append(filters['min_price'])
+        elif filters.get('max_price'):
+            query += " AND price_per_day <= ?"
+            params.append(filters['max_price'])
         
         if filters.get('sort') == 'price_asc':
             query += " ORDER BY price_per_day ASC"
         elif filters.get('sort') == 'price_desc':
             query += " ORDER BY price_per_day DESC"
+        else:
+            query += " ORDER BY id ASC"
+    else:
+        query += " ORDER BY id ASC"
     
     cars = conn.execute(query, params).fetchall()
     conn.close()
