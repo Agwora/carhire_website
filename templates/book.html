@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Book {{ car.name }} - CarHire{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+        <div class="md:flex">
+            <!-- Car Image -->
+            <div class="md:w-1/2">
+                <img src="{{ car.image_url }}" alt="{{ car.name }}" class="w-full h-full object-cover">
+            </div>
+            
+            <!-- Booking Form -->
+            <div class="md:w-1/2 p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ car.name }}</h1>
+                <p class="text-3xl font-bold text-blue-600 mb-6">€{{ car.price_per_day }} <span class="text-lg text-gray-600">/ day</span></p>
+                
+                {% if errors %}
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded animate-shake">
+                    <ul class="list-disc list-inside text-red-700">
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <form method="POST" onsubmit="showLoading(this)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                        <input type="text" name="customer_name" value="{{ customer_name or '' }}" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                        <input type="email" name="customer_email" value="{{ customer_email or '' }}" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Pickup Date</label>
+                        <input type="date" name="pickup_date" id="pickup_date" value="{{ pickup_date or '' }}" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">Return Date</label>
+                        <input type="date" name="return_date" id="return_date" value="{{ return_date or '' }}" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                        Continue to Summary →
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    const pickupInput = document.getElementById('pickup_date');
+    const returnInput = document.getElementById('return_date');
+    
+    if(pickupInput) pickupInput.min = today;
+    
+    function updateReturnMin() {
+        if(pickupInput.value) {
+            returnInput.min = pickupInput.value;
+            if(returnInput.value && returnInput.value <= pickupInput.value) {
+                returnInput.value = '';
+            }
+        }
+    }
+    
+    pickupInput.addEventListener('change', updateReturnMin);
+</script>
+{% endblock %}
