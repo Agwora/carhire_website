@@ -1,23 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime
 import database as db
+import os
 
 app = Flask(__name__)
-app.secret_key = 'car-hire-secure-2024!'
+app.secret_key = 'your-secret-key-change-this-in-production'
 
-
-@app.after_request
-def add_header(response):
-    response.headers['Content-Security-Policy'] = "img-src 'self' https://cdn.pixabay.com data:;"
-    return response
-# Add datetime to template context
 @app.context_processor
 def inject_now():
     return {'now': datetime.now()}
 
 db.init_db()
-
-# ==================== CUSTOMER ROUTES ====================
 
 @app.route('/')
 def index():
@@ -89,8 +82,6 @@ def confirm(booking_id):
     if not booking:
         return "Booking not found", 404
     return render_template('success.html', booking=booking)
-
-# ==================== ADMIN ROUTES ====================
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -174,6 +165,5 @@ def admin_cancel_booking(booking_id):
     return redirect(url_for('admin_dashboard'))
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0',debug=True, port=port)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', debug=True, port=port)
