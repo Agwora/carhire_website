@@ -49,9 +49,11 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for car in cars %}
         <div class="card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-            <div class="relative h-56 overflow-hidden">
-                <img src="{{ car.image_url }}" alt="{{ car.name }}" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
-                <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full">
+            <div class="relative h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                <img src="{{ car.image_url }}" alt="{{ car.name }}" 
+                     class="w-full h-full object-cover transform hover:scale-110 transition duration-500"
+                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-blue-500 to-purple-600\'><span class=\'text-6xl mb-2\'>🚗</span><span class=\'text-white font-semibold\'>{{ car.name }}</span></div>'">
+                <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full z-10">
                     <span class="text-sm font-bold text-blue-600">€{{ car.price_per_day }}/day</span>
                 </div>
             </div>
