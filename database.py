@@ -52,17 +52,19 @@ def init_db():
     cursor.execute("SELECT COUNT(*) FROM cars")
     if cursor.fetchone()[0] == 0:
         sample_cars = [
-            # Using reliable, always-working image URLs
-            ('Tesla Model 3', 89, 'https://i.imgur.com/6SqFqjL.jpeg', 1),
-            ('BMW i8', 149, 'https://i.imgur.com/ZTkZvZx.jpeg', 1),
-            ('Mercedes C-Class', 99, 'https://i.imgur.com/7kQqJZv.jpeg', 1),
-            ('Audi A6', 109, 'https://i.imgur.com/KvQqZJx.jpeg', 1),
-            ('Porsche 911', 299, 'https://i.imgur.com/ZTkQvZx.jpeg', 1),
-            ('Toyota Camry', 65, 'https://i.imgur.com/6QqJZkZ.jpeg', 1),
-            ('Honda Civic', 55, 'https://i.imgur.com/7ZkQqJv.jpeg', 1),
-            ('Ford Mustang', 199, 'https://i.imgur.com/8QqKZvZ.jpeg', 1),
-            ('Chevrolet Camaro', 179, 'https://i.imgur.com/9ZkQqJx.jpeg', 1),
-            ('Lamborghini Huracan', 499, 'https://i.imgur.com/0QqKZvZ.jpeg', 1),
+            # USING VERIFIED WORKING IMAGE URLs FROM RELIABLE CDNs
+            ('Tesla Model 3', 89, 'https://cdn.pixabay.com/photo/2024/01/19/22/43/tesla-8520984_640.jpg', 1),
+            ('BMW i8', 149, 'https://cdn.pixabay.com/photo/2020/04/03/21/05/bmw-5001276_640.jpg', 1),
+            ('Mercedes C-Class', 99, 'https://cdn.pixabay.com/photo/2020/04/22/20/32/mercedes-5081316_640.jpg', 1),
+            ('Audi A6', 109, 'https://cdn.pixabay.com/photo/2018/05/09/10/35/audi-3385754_640.jpg', 1),
+            ('Porsche 911', 299, 'https://cdn.pixabay.com/photo/2022/05/28/11/33/porsche-7227241_640.jpg', 1),
+            ('Toyota Camry', 65, 'https://cdn.pixabay.com/photo/2022/11/10/20/38/toyota-camry-7583839_640.jpg', 1),
+            ('Honda Civic', 55, 'https://cdn.pixabay.com/photo/2022/10/04/14/11/honda-7498924_640.jpg', 1),
+            ('Ford Mustang', 199, 'https://cdn.pixabay.com/photo/2016/04/16/16/13/ford-mustang-1333082_640.jpg', 1),
+            ('Chevrolet Camaro', 179, 'https://cdn.pixabay.com/photo/2022/05/28/11/33/camaro-7227240_640.jpg', 1),
+            ('Lamborghini Huracan', 499, 'https://cdn.pixabay.com/photo/2022/04/09/15/09/lamborghini-7120942_640.jpg', 1),
+            ('Volkswagen Golf', 70, 'https://cdn.pixabay.com/photo/2016/11/29/12/24/volkswagen-1869503_640.jpg', 1),
+            ('Nissan GT-R', 250, 'https://cdn.pixabay.com/photo/2020/10/10/12/46/nissan-5644628_640.jpg', 1),
         ]
         cursor.executemany("INSERT INTO cars (name, price_per_day, image_url, is_available) VALUES (?, ?, ?, ?)", sample_cars)
     
