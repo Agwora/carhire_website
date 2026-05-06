@@ -9,11 +9,43 @@
     <script defer src="{{ url_for('static', filename='script.js') }}"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .bg-gradient-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.pexels.com/photos/210182/pexels-photo-210182.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        
+        /* Dark overlay for better text readability */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        /* Make cards more visible against dark background */
+        .bg-white\/95 {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        nav, footer {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .bg-gradient-custom { 
+            background: none; 
+        }
     </style>
 </head>
-<body class="bg-gradient-custom">
+<body>
     <!-- Navigation -->
     <nav class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4">
