@@ -1,4 +1,4 @@
-// Smooth page transitions
+// Preload car images
 document.addEventListener('DOMContentLoaded', () => {
     // Add fade-in animation to main content
     const main = document.querySelector('main');
@@ -17,6 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
             msg.style.opacity = '0';
             setTimeout(() => msg.remove(), 300);
         }, 3000);
+    });
+    
+    // Preload all car images
+    const images = document.querySelectorAll('.card img');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+            img.addEventListener('error', () => {
+                console.log('Image failed to load:', img.src);
+            });
+        }
     });
 });
 
