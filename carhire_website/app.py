@@ -3,7 +3,7 @@ from datetime import datetime
 import database as db
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-this-in-production'
+app.secret_key = 'car-hire-secure-2024!'
 
 # Add datetime to template context
 @app.context_processor
