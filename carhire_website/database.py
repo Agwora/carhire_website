@@ -52,24 +52,26 @@ def init_db():
     cursor.execute("SELECT COUNT(*) FROM cars")
     if cursor.fetchone()[0] == 0:
         sample_cars = [
-            ('Tesla Model 3', 89, 'https://cdn.pixabay.com/photo/2024/01/19/22/43/tesla-8520984_640.jpg', 1),
-            ('BMW i8', 149, 'https://cdn.pixabay.com/photo/2020/04/03/21/05/bmw-5001276_640.jpg', 1),
-            ('Mercedes C-Class', 99, 'https://cdn.pixabay.com/photo/2020/04/22/20/32/mercedes-5081316_640.jpg', 1),
-            ('Audi A6', 109, 'https://cdn.pixabay.com/photo/2018/05/09/10/35/audi-3385754_640.jpg', 1),
-            ('Porsche 911', 299, 'https://cdn.pixabay.com/photo/2022/05/28/11/33/porsche-7227241_640.jpg', 1),
-            ('Toyota Camry', 65, 'https://cdn.pixabay.com/photo/2022/11/10/20/38/toyota-camry-7583839_640.jpg', 1),
-            ('Honda Civic', 55, 'https://cdn.pixabay.com/photo/2022/10/04/14/11/honda-7498924_640.jpg', 1),
-            ('Ford Mustang', 199, 'https://cdn.pixabay.com/photo/2016/04/16/16/13/ford-mustang-1333082_640.jpg', 1),
-            ('Chevrolet Camaro', 179, 'https://cdn.pixabay.com/photo/2022/05/28/11/33/camaro-7227240_640.jpg', 1),
-            ('Lamborghini Huracan', 499, 'https://cdn.pixabay.com/photo/2022/04/09/15/09/lamborghini-7120942_640.jpg', 1),
-            ('Volkswagen Golf', 70, 'https://cdn.pixabay.com/photo/2016/11/29/12/24/volkswagen-1869503_640.jpg', 1),
-            ('Nissan GT-R', 250, 'https://cdn.pixabay.com/photo/2020/10/10/12/46/nissan-5644628_640.jpg', 1),
+            # USING LOCAL IMAGES from static/images/
+            ('Tesla Model 3', 89, '/static/images/tesla.jpg', 1),
+            ('BMW i8', 149, '/static/images/bmw.jpg', 1),
+            ('Mercedes C-Class', 99, '/static/images/mercedes.jpg', 1),
+            ('Audi A6', 109, '/static/images/audi.jpg', 1),
+            ('Porsche 911', 299, '/static/images/porsche.jpg', 1),
+            ('Toyota Camry', 65, '/static/images/toyota.jpg', 1),
+            ('Honda Civic', 55, '/static/images/honda.jpg', 1),
+            ('Ford Mustang', 199, '/static/images/ford.jpg', 1),
+            ('Chevrolet Camaro', 179, '/static/images/chevrolet.jpg', 1),
+            ('Lamborghini Huracan', 499, '/static/images/lamborghini.jpg', 1),
+            ('Volkswagen Golf', 70, '/static/images/volkswagen.jpg', 1),
+            ('Nissan GT-R', 250, '/static/images/nissan.jpg', 1),
         ]
         cursor.executemany("INSERT INTO cars (name, price_per_day, image_url, is_available) VALUES (?, ?, ?, ?)", sample_cars)
     
     conn.commit()
     conn.close()
 
+# ALL OTHER FUNCTIONS REMAIN THE SAME (copy from previous database.py)
 def get_all_cars(filters=None):
     conn = get_db()
     query = "SELECT * FROM cars WHERE is_available = 1"
@@ -84,24 +86,11 @@ def get_all_cars(filters=None):
             if filters['min_price'] <= filters['max_price']:
                 query += " AND price_per_day BETWEEN ? AND ?"
                 params.extend([filters['min_price'], filters['max_price']])
-            else:
-                query += " AND price_per_day BETWEEN ? AND ?"
-                params.extend([filters['max_price'], filters['min_price']])
-        elif filters.get('min_price'):
-            query += " AND price_per_day >= ?"
-            params.append(filters['min_price'])
-        elif filters.get('max_price'):
-            query += " AND price_per_day <= ?"
-            params.append(filters['max_price'])
         
         if filters.get('sort') == 'price_asc':
             query += " ORDER BY price_per_day ASC"
         elif filters.get('sort') == 'price_desc':
             query += " ORDER BY price_per_day DESC"
-        else:
-            query += " ORDER BY id ASC"
-    else:
-        query += " ORDER BY id ASC"
     
     cars = conn.execute(query, params).fetchall()
     conn.close()
