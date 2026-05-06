@@ -6,9 +6,12 @@ import os
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this-in-production'
 @app.after_request
+@app.after_request
 def add_header(response):
-    response.headers['Content-Security-Policy'] = "img-src 'self' https://cdn.pixabay.com data:;"
+    # This allows images from ANY secure (https) website
+    response.headers['Content-Security-Policy'] = "img-src 'self' https: data:;"
     return response
+
 @app.context_processor
 def inject_now():
     return {'now': datetime.now()}
