@@ -6,6 +6,8 @@ authors = [{name = "Agwora"}]
 dependencies = [
     "flask>=3.0.0",
     "gunicorn>=21.2.0",
+    "flask-sqlalchemy", # Add this if you have a database
+    "flask-login"
 ]
 requires-python = ">=3.11"
 
